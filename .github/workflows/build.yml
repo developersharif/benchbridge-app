@@ -140,6 +140,9 @@ jobs:
           LOG_KEY: ${{ secrets.LOG_ENCRYPTION_KEY }}
           CARGO_TERM_COLOR: never
           CARGO_TERM_PROGRESS_WHEN: never
+          # The source repo's rust-toolchain.toml says "stable" and would override `rustup default`
+          # (auto-installing an unpinned toolchain without the macOS targets); this env var wins.
+          RUSTUP_TOOLCHAIN: ${{ env.RUST_TOOLCHAIN }}
           CI: "true"
         run: bash tools/scripts/build-installers.sh
       - name: Upload installers
