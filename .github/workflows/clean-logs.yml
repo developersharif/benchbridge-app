@@ -1,0 +1,33 @@
+# Deletes the logs of a finished build run. The source repository is private but this one is
+# public, so build logs are world-readable. Installers (release assets) and provenance
+# attestations are NOT affected; encrypted logs/artifacts expire on their own after 3 days.
+#
+# To keep logs while debugging the workflow itself, set the repository VARIABLE KEEP_LOGS=true
+# (Settings -> Secrets and variables -> Actions -> Variables).
+name: clean-build-logs
+
+on:
+  workflow_run:
+    workflows: [build-release]
+    types: [completed]
+
+permissions: {}
+
+jobs:
+  delete-logs:
+    name: delete logs of the finished run
+    if: ${{ vars.KEEP_LOGS != 'true' && github.event.workflow_run.repository.full_name == github.repository }}
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    permissions:
+      actions: write
+    steps:
+      - name: Delete run logs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          set -euo pipefail
+          [[ "$RUN_ID" =~ ^[0-9]+$ ]] || { echo "::error::unexpected run id"; exit 1; }
+          gh api --method DELETE "repos/${GITHUB_REPOSITORY}/actions/runs/${RUN_ID}/logs"
+          echo "deleted logs of run ${RUN_ID}"
