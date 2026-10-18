@@ -13,10 +13,10 @@ on:
         required: true
         type: string
       draft_release:
-        description: Create a DRAFT pre-release with the installers (otherwise artifacts only, kept 3 days)
+        description: Store the build as a DRAFT pre-release (recommended). If off, installers are only kept as artifacts for 3 days
         required: true
         type: boolean
-        default: false
+        default: true
 
 # Deny everything by default; each job asks only for what it needs.
 permissions: {}

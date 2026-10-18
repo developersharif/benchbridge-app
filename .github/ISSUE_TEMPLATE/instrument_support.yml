@@ -1,0 +1,55 @@
+name: Instrument compatibility
+description: Ask for, or help us verify, support for a specific scale or balance
+labels: ["instrument"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **benchbridge does not claim support for any instrument yet.** We add an instrument only from its
+        manual's protocol description and, ideally, a tester who owns that exact model. Details from the
+        manual help most. Please remove serial numbers and any customer data.
+  - type: input
+    id: model
+    attributes:
+      label: Manufacturer and exact model
+      placeholder: "Maker, model number, firmware if known"
+    validations:
+      required: true
+  - type: dropdown
+    id: interface
+    attributes:
+      label: Connection
+      options:
+        - RS-232 serial port
+        - USB (appears as a COM / tty serial port)
+        - USB (other or unknown)
+        - Ethernet / network
+        - Not sure
+    validations:
+      required: true
+  - type: input
+    id: manual
+    attributes:
+      label: Link to the manual or protocol document
+      description: Public link or the page numbers of the communication section.
+  - type: textarea
+    id: settings
+    attributes:
+      label: Serial settings from the manual (if known)
+      description: Baud rate, data bits, parity, stop bits, flow control, terminator.
+  - type: textarea
+    id: sample
+    attributes:
+      label: Sample output lines
+      description: A few lines from the manual or a terminal capture, with identifying data removed.
+      render: text
+  - type: dropdown
+    id: tester
+    attributes:
+      label: Could you test a build with this instrument?
+      options:
+        - "Yes"
+        - "Maybe"
+        - "No, I only have the manual"
+    validations:
+      required: true

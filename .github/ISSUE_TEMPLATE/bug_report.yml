@@ -1,0 +1,70 @@
+name: Bug report
+description: Something in benchbridge does not work as expected
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping. **Do not post** measurement readings, serial numbers, or any lab, patient or
+        customer data. In the app, **Diagnostics → Copy support info** is safe to paste: it contains only
+        versions, states and counters.
+  - type: input
+    id: version
+    attributes:
+      label: benchbridge version
+      description: Shown in Diagnostics, or in the installer file name.
+      placeholder: "0.1.0"
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Windows 11
+        - Windows 10
+        - macOS (Apple silicon)
+        - macOS (Intel)
+        - Linux (Debian / Ubuntu)
+        - Linux (Fedora / RHEL)
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: source
+    attributes:
+      label: What were you reading from?
+      options:
+        - Demo mode (synthetic data)
+        - A real instrument
+        - Not connected yet
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect instead?
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+  - type: textarea
+    id: support
+    attributes:
+      label: Support info
+      description: Paste the text from Diagnostics → Copy support info.
+      render: text
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I removed any confidential data from this report.
+          required: true
+        - label: I searched existing issues first.

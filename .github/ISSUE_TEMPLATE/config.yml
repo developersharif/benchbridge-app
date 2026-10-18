@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question or idea (Discussions)
+    url: https://github.com/developersharif/benchbridge-app/discussions
+    about: Ask how something works or share an idea.
+  - name: Report a security vulnerability (private)
+    url: https://github.com/developersharif/benchbridge-app/security/advisories/new
+    about: Do NOT open a public issue for security problems.
