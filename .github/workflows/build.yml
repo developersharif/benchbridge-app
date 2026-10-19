@@ -144,6 +144,14 @@ jobs:
           # (auto-installing an unpinned toolchain without the macOS targets); this env var wins.
           RUSTUP_TOOLCHAIN: ${{ env.RUST_TOOLCHAIN }}
           CI: "true"
+          # macOS signing + notarization (read by `tauri build`). Values come from the `release`
+          # environment and are passed to the macOS leg only; empty elsewhere, so other legs stay unsigned.
+          APPLE_CERTIFICATE: ${{ matrix.name == 'macos' && secrets.APPLE_CERTIFICATE || '' }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ matrix.name == 'macos' && secrets.APPLE_CERTIFICATE_PASSWORD || '' }}
+          APPLE_SIGNING_IDENTITY: ${{ matrix.name == 'macos' && secrets.APPLE_SIGNING_IDENTITY || '' }}
+          APPLE_ID: ${{ matrix.name == 'macos' && secrets.APPLE_ID || '' }}
+          APPLE_PASSWORD: ${{ matrix.name == 'macos' && secrets.APPLE_PASSWORD || '' }}
+          APPLE_TEAM_ID: ${{ matrix.name == 'macos' && secrets.APPLE_TEAM_ID || '' }}
         run: bash tools/scripts/build-installers.sh
       - name: Upload installers
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
