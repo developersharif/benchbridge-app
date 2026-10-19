@@ -97,8 +97,10 @@ the app (hardened runtime) and notarizes and staples it. Checked on a real Mac f
 Safari-downloaded `.dmg` showed only macOS's standard "downloaded from the Internet" confirmation.
 - The `.dmg` file itself is signed but **not notarized** (`spctl` reports "Unnotarized Developer ID" for the
   dmg, and no ticket is stapled to it). Only the app inside is notarized.
-- If a secret is missing, the build is **not expected to fail**; it would produce an unsigned dmg. Verify
-  every release with `codesign -dv`, `spctl --assess -vv` and `xcrun stapler validate`.
+- If a secret is missing, Tauri would produce an unsigned dmg, so the macOS leg runs
+  `scripts/verify-macos-signing.sh` after the build. It mounts each dmg and fails the job unless
+  `codesign --verify --deep --strict`, `spctl --assess` and `stapler validate` pass on the app inside.
+  (Added 2026-10-19; not yet exercised by a real run. Still spot-check the first release built with it.)
 
 **Windows and Linux: not signed.** Windows needs an Authenticode certificate; not implemented.
 
