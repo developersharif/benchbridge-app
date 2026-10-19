@@ -205,7 +205,8 @@ jobs:
           cat > notes.md <<NOTES
           Early build of benchbridge ${VERSION} from source commit \`${short}\`.
 
-          **Unsigned and not notarized.** Windows SmartScreen and macOS Gatekeeper will warn.
+          **macOS:** the app is signed with a Developer ID and notarized (check: \`spctl --assess -vv benchbridge.app\`); the \`.dmg\` file itself is not notarized.
+          **Windows and Linux installers are unsigned**; Windows SmartScreen will warn.
           **No instrument has been verified with this software yet.** The demo mode uses synthetic data.
 
           Verify your download:

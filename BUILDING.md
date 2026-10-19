@@ -87,12 +87,20 @@ Issue forms (`.github/ISSUE_TEMPLATE/`) warn reporters not to post readings or c
 for the app's *Copy support info* text, which contains only versions, states and counters. Nothing
 automated reads issue text. Treat issue content as untrusted input if you ever add automation.
 
-## Not signed (yet)
+## Signing
 
-Installers are **unsigned and not notarized**, so Windows SmartScreen and macOS Gatekeeper will warn. Signing
-needs certificates this repo does not have (Windows Authenticode certificate; Apple Developer ID +
-notarization credentials). It should be added as environment secrets in the `release` environment, never
-as plain repository secrets. Not implemented.
+**macOS: implemented.** The build step passes `APPLE_CERTIFICATE`, `APPLE_CERTIFICATE_PASSWORD`,
+`APPLE_SIGNING_IDENTITY`, `APPLE_ID`, `APPLE_PASSWORD` (an app-specific password) and `APPLE_TEAM_ID` to the
+macOS leg only. They are secrets of the `release` environment, never plain repository secrets. Tauri signs
+the app (hardened runtime) and notarizes and staples it. Checked on a real Mac for run 39233912289
+(2026-10-19): the `.app` is `Notarized Developer ID` (`spctl`), `stapler validate` passes, and a
+Safari-downloaded `.dmg` showed only macOS's standard "downloaded from the Internet" confirmation.
+- The `.dmg` file itself is signed but **not notarized** (`spctl` reports "Unnotarized Developer ID" for the
+  dmg, and no ticket is stapled to it). Only the app inside is notarized.
+- If a secret is missing, the build is **not expected to fail**; it would produce an unsigned dmg. Verify
+  every release with `codesign -dv`, `spctl --assess -vv` and `xcrun stapler validate`.
+
+**Windows and Linux: not signed.** Windows needs an Authenticode certificate; not implemented.
 
 ## Status (read before relying on this)
 

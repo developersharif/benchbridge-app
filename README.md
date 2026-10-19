@@ -4,7 +4,8 @@ Reads measurements from **serial weighing scales and laboratory balances** and s
 computer (SQLite, exportable to CSV). Local-first: no account, no cloud.
 
 > **Early version.** No instrument model has been verified with benchbridge yet, and the built-in demo
-> uses synthetic data. Installers are **unsigned**, so your operating system will warn before running them.
+> uses synthetic data. The macOS app is signed and notarized
+> (macOS still asks once to confirm an app downloaded from the Internet); the Windows and Linux installers are **unsigned**, so Windows will warn before running it.
 
 This repository is where you **download builds**, **report problems** and **ask questions**. It does not
 contain the application source code.

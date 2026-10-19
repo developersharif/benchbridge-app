@@ -18,8 +18,9 @@ Every release carries `SHA256SUMS.txt` and a signed build-provenance attestation
 sha256sum -c SHA256SUMS.txt
 gh attestation verify <file> --repo developersharif/benchbridge-app
 ```
-Current installers are **unsigned and not notarized**, so Windows SmartScreen and macOS Gatekeeper will
-warn. Only run files whose checksum and attestation verify.
+The macOS app is signed with a Developer ID and notarized; the `.dmg` file itself is not notarized. The
+Windows and Linux installers are **unsigned**, so Windows SmartScreen will warn. Only run files whose checksum
+and attestation verify.
 
 ## Automation rule
 No workflow in this repository runs on issues, comments or pull requests, so reports and discussions
